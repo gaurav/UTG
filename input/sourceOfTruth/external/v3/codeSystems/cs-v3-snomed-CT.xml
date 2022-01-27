@@ -29,6 +29,8 @@
   <content value="not-present"/>
   <identifier>
     <type value="prefix"/>
+    <use value="usual"/>
+    <system value="https://terminology.hl7.org/temporary/CodeSystem/RDF-prefix"/>
     <value value="https://purl.bioontology.org/ontology/SNOMEDCT/"/>
   </identifier>
 </CodeSystem>
