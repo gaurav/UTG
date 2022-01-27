@@ -36,7 +36,8 @@
     <preferred value="true"/>
   </uniqueId>
   <uniqueId>
-    <type value="prefix"/>
+    <type value="other"/>
+    <comment value="rdf-prefix"/>
     <value value="https://purl.bioontology.org/ontology/SNOMEDCT/"/>
   </uniqueId>
 </NamingSystem>
