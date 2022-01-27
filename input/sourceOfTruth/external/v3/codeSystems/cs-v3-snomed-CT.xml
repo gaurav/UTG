@@ -27,4 +27,8 @@
   <description value="SNOMED CT is a core clinical healthcare terminology that contains concepts with unique meanings and formal logic based definitions organized into hierarchies."/>
   <copyright value="This artefact includes content from SNOMED Clinical Terms (SNOMED CT) which is copyrighted material of the International Health Terminology Standards Development Organisation (IHTSDO). Where an implementation of this artefact makes use of SNOMED CT content, the implementer must have the appropriate SNOMED CT Affiliate license - for more information contact http://www.snomed.org/snomed-ct/get-snomed-ct or info@snomed.org"/>
   <content value="not-present"/>
+  <identifier>
+    <use value="prefix"/>
+    <value value="https://purl.bioontology.org/ontology/SNOMEDCT/"/>
+  </identifier>
 </CodeSystem>

@@ -35,4 +35,8 @@
     <value value="http://snomed.info/sct"/>
     <preferred value="true"/>
   </uniqueId>
+  <uniqueId>
+    <type value="prefix"/>
+    <value value="https://purl.bioontology.org/ontology/SNOMEDCT/"/>
+  </uniqueId>
 </NamingSystem>
