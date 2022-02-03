@@ -36,4 +36,9 @@
     <value value="urn:iso:std:iso:3166"/>
     <preferred value="true"/>
   </uniqueId>
+  <uniqueId>
+    <type value="other"/>
+    <comment value="rdf-prefix"/>
+    <value value="https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"/>
+  </uniqueId>
 </NamingSystem>
