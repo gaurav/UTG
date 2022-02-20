@@ -43,6 +43,11 @@
     </period>
   </uniqueId>
   <uniqueId>
+    <type value="other"/>
+    <comment value="rdf-prefix"/>
+    <value value="https://id.nlm.nih.gov/mesh/"/>
+  </uniqueId>
+  <uniqueId>
     <type value="uri"/>
     <value value="http://terminology.hl7.org/CodeSystem/MSH"/>
     <preferred value="false"/>
