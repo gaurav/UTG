@@ -38,6 +38,6 @@
   <uniqueId>
     <type value="other"/>
     <comment value="rdf-prefix"/>
-    <value value="https://purl.bioontology.org/ontology/SNOMEDCT/"/>
+    <value value="http://snomed.info/id/"/>
   </uniqueId>
 </NamingSystem>
