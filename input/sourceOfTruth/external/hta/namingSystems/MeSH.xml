@@ -44,7 +44,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="rdf-prefix"/>
+    <comment value="baseURI"/>
     <value value="https://id.nlm.nih.gov/mesh/"/>
   </uniqueId>
   <uniqueId>

@@ -37,7 +37,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="rdf-prefix"/>
+    <comment value="baseURI"/>
     <value value="http://purl.bioontology.org/ontology/RXNORM/"/>
   </uniqueId>
 </NamingSystem>

@@ -33,7 +33,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="rdf-prefix"/>
+    <comment value="baseURI"/>
     <value value="http://loinc.org/"/>
   </uniqueId>
 </NamingSystem>

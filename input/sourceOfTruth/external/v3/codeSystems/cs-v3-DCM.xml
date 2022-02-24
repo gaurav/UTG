@@ -7,9 +7,9 @@
     <value value="urn:oid:1.2.840.10008.2.16.4"/>
   </identifier>
   <identifier>
-    <type value="prefix"/>
+    <type value="baseURI"/>
     <use value="usual"/>
-    <system value="https://terminology.hl7.org/temporary/CodeSystem/RDF-prefix"/>
+    <system value="https://terminology.hl7.org/temporary/CodeSystem/baseURI"/>
     <value value="http://dicom.nema.org/resources/ontology/DCM/"/>
   </identifier>
   <version value="3.0.0"/>

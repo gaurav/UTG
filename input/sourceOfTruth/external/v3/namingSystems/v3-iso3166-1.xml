@@ -38,7 +38,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="rdf-prefix"/>
+    <comment value="baseURI"/>
     <value value="https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"/>
   </uniqueId>
 </NamingSystem>
