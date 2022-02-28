@@ -7,7 +7,6 @@
     <value value="urn:oid:1.0.3166.2"/>
   </identifier>
   <identifier>
-    <type value="stemIRI"/>
     <use value="usual"/>
     <system value="https://terminology.hl7.org/temporary/CodeSystem/stemIRI"/>
     <value value="https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"/>
