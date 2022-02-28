@@ -38,7 +38,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="baseURI"/>
+    <comment value="stemIRI"/>
     <value value="https://www.omg.org/spec/LCC/Countries/ISO3166-1-CountryCodes/"/>
   </uniqueId>
 </NamingSystem>

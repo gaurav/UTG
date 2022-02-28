@@ -7,9 +7,9 @@
     <value value="urn:oid:2.16.840.1.113883.6.177"/>
   </identifier>
   <identifier>
-    <type value="baseURI"/>
+    <type value="stemIRI"/>
     <use value="usual"/>
-    <system value="https://terminology.hl7.org/temporary/CodeSystem/baseURI"/>
+    <system value="https://terminology.hl7.org/temporary/CodeSystem/stemIRI"/>
     <value value="https://id.nlm.nih.gov/mesh/"/>
   </identifier>
   <version value="3.0.0"/>

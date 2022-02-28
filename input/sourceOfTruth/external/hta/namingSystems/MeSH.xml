@@ -44,7 +44,7 @@
   </uniqueId>
   <uniqueId>
     <type value="other"/>
-    <comment value="baseURI"/>
+    <comment value="stemIRI"/>
     <value value="https://id.nlm.nih.gov/mesh/"/>
   </uniqueId>
   <uniqueId>
