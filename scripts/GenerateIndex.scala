@@ -44,9 +44,20 @@ object GenerateIndex extends StrictLogging {
     try {
       val xml = XML.loadFile(f)
       val id = (xml \ "id" \ "@value").text
-      val url = (xml \ "url" \ "@value").text
+      val url = (xml \ "url" \ "@value")
+      val uris = (xml \ "uniqueId") map {
+        case uniqueId => {
+          val typ = uniqueId \ "type" \ "@value"
+          if(typ.text == "uri") {
+            (uniqueId \ "value" \ "@value")
+          } else {
+            Seq()
+          }
+        }
+      }
+      val urls = (url ++ uris).flatten.map(_.text.trim).mkString("|")
       val description = (xml \ "description" \ "@value").text
-      Some(Result(f, xml.label, id, url, description))
+      Some(Result(f, xml.label, id, urls, description))
     } catch {
       case ex => {
         ex.printStackTrace()
