@@ -17,10 +17,11 @@ object GenerateIndex extends StrictLogging {
     val files = recursiveListFiles(new File(args(0)))
     val xmlFiles = files.filter(_.getName.toLowerCase.endsWith(".xml"))
 
-    logger.info(s"Identified ${xmlFiles.length} XML files to index.")
+    // logger.info(s"Identified ${xmlFiles.length} XML files to index.")
 
+    println(s"file\trootLabel\tid\turl\tdescription")
     xmlFiles.flatMap(indexFile).foreach(res => {
-      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.description}")
+      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}")
     })
   }
 
@@ -32,11 +33,14 @@ object GenerateIndex extends StrictLogging {
     id: String,
     url: String,
     description: String
-  )
+  ) {
+    /** Escape all the description fields. */
+    val descriptionField = description.replaceAll("[\\s\\n\\r]+", " ")
+  }
 
   /** Index files */
   def indexFile(f: File): Option[Result] = {
-    logger.debug(s"Indexing file ${f}")
+    // logger.debug(s"Indexing file ${f}")
     try {
       val xml = XML.loadFile(f)
       val id = (xml \ "id" \ "@value").text
