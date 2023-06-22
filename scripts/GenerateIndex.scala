@@ -1,5 +1,5 @@
 //> using dep com.typesafe.scala-logging::scala-logging:3.9.5
-//> using dep ch.qos.logback:logback-classic:1.4.7
+//> using dep ch.qos.logback:logback-classic:1.4.8
 //> using dep org.scala-lang.modules::scala-xml:2.1.0
 
 import java.io.File
@@ -19,9 +19,9 @@ object GenerateIndex extends StrictLogging {
 
     // logger.info(s"Identified ${xmlFiles.length} XML files to index.")
 
-    println(s"file\trootLabel\tid\turl\tdescription")
+    println(s"file\trootLabel\tid\turl\tdescription\tpublisher\tstatus")
     xmlFiles.flatMap(indexFile).foreach(res => {
-      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}")
+      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}\t${res.publisher}\t${res.status}")
     })
   }
 
@@ -32,7 +32,9 @@ object GenerateIndex extends StrictLogging {
     rootLabel: String,
     id: String,
     url: String,
-    description: String
+    description: String,
+    publisher: String,
+    status: String
   ) {
     /** Escape all the description fields. */
     val descriptionField = description.replaceAll("[\\s\\n\\r]+", " ")
@@ -57,7 +59,9 @@ object GenerateIndex extends StrictLogging {
       }
       val urls = (url ++ uris).flatten.map(_.text.trim).mkString("|")
       val description = (xml \ "description" \ "@value").text
-      Some(Result(f, xml.label, id, urls, description))
+      val publisher = (xml \ "publisher" \ "@value").text
+      val status = (xml \ "status" \ "@value").text
+      Some(Result(f, xml.label, id, urls, description, publisher, status))
     } catch {
       case ex => {
         ex.printStackTrace()
