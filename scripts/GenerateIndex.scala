@@ -68,10 +68,16 @@ object GenerateIndex extends StrictLogging {
           (typ.text, (uniqueId \ "value" \ "@value").text)
         }
       }
+      val identifiers = (xml \ "identifier") map {
+        case identifier => {
+          val typ = identifier \ "type" \ "coding" \ "code" \ "@value"
+          (typ.text, (identifier \ "value" \ "@value").text)
+        }
+      }
       val description = (xml \ "description" \ "@value").text
       val publisher = (xml \ "publisher" \ "@value").text
       val status = (xml \ "status" \ "@value").text
-      Some(Result(f, xml.label, id, url, uniqueIds, description, publisher, status))
+      Some(Result(f, xml.label, id, url, uniqueIds ++ identifiers, description, publisher, status))
     } catch {
       case ex => {
         ex.printStackTrace()
