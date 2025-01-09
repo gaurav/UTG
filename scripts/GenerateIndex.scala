@@ -4,6 +4,7 @@
 
 import java.io.File
 import scala.xml.XML
+import scala.xml.NodeSeq
 
 import com.typesafe.scalalogging.StrictLogging
 
@@ -25,11 +26,16 @@ object GenerateIndex extends StrictLogging {
     val files = args.flatMap(arg => recursiveListFiles(new File(arg)))
     val xmlFiles = files.filter(_.getName.toLowerCase.endsWith(".xml"))
 
-    logger.debug(s"Identified ${xmlFiles.length} XML files to index.")
+    // logger.debug(s"Identified ${xmlFiles.length} XML files to index.")
 
-    println(s"file\trootLabel\tid\turl\tdescription\tpublisher\tstatus")
-    xmlFiles.flatMap(indexFile).sortBy(_.id).foreach(res => {
-      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}\t${res.publisher}\t${res.status}")
+    val results = xmlFiles.flatMap(indexFile)
+    val uniqueIdTypes = results.flatMap(_.uniqueIds).map(_._1).sorted.distinct
+
+    println(s"file\trootLabel\tid\turl\tdescription\tpublisher\tstatus\t" + uniqueIdTypes.map(uniqueIdType => f"uniqueIdType=${uniqueIdType}").mkString("\t"))
+    results.sortBy(_.id).foreach(res => {
+      val uniqueIdMap = res.uniqueIds.toMap
+      val byIRIType = uniqueIdTypes.map(typ => uniqueIdMap.getOrElse(typ, "")).mkString("\t")
+      println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}\t${res.publisher}\t${res.status}\t${byIRIType}")
     })
   }
 
@@ -40,6 +46,7 @@ object GenerateIndex extends StrictLogging {
     rootLabel: String,
     id: String,
     url: String,
+    uniqueIds: Seq[(String, String)],
     description: String,
     publisher: String,
     status: String
@@ -54,22 +61,17 @@ object GenerateIndex extends StrictLogging {
     try {
       val xml = XML.loadFile(f)
       val id = (xml \ "id" \ "@value").text
-      val url = (xml \ "url" \ "@value")
-      val uris = (xml \ "uniqueId") map {
+      val url = (xml \ "url" \ "@value").text
+      val uniqueIds = (xml \ "uniqueId") map {
         case uniqueId => {
           val typ = uniqueId \ "type" \ "@value"
-          if(typ.text == "uri") {
-            (uniqueId \ "value" \ "@value")
-          } else {
-            Seq()
-          }
+          (typ.text, (uniqueId \ "value" \ "@value").text)
         }
       }
-      val urls = (url ++ uris).flatten.map(_.text.trim).mkString("|")
       val description = (xml \ "description" \ "@value").text
       val publisher = (xml \ "publisher" \ "@value").text
       val status = (xml \ "status" \ "@value").text
-      Some(Result(f, xml.label, id, urls, description, publisher, status))
+      Some(Result(f, xml.label, id, url, uniqueIds, description, publisher, status))
     } catch {
       case ex => {
         ex.printStackTrace()
@@ -82,7 +84,7 @@ object GenerateIndex extends StrictLogging {
    * Code from https://stackoverflow.com/a/2638109/27310
    */
   def recursiveListFiles(f: File): Seq[File] = {
-    logger.debug(f"recursiveListFiles(${f})")
+    // logger.debug(f"recursiveListFiles(${f})")
 
     val these = f.listFiles
     these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
