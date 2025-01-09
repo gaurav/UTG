@@ -1,26 +1,34 @@
 //> using dep com.typesafe.scala-logging::scala-logging:3.9.5
-//> using dep ch.qos.logback:logback-classic:1.4.8
-//> using dep org.scala-lang.modules::scala-xml:2.1.0
+//> using dep ch.qos.logback:logback-classic:1.5.16
+//> using dep org.scala-lang.modules::scala-xml:2.3.0
 
 import java.io.File
 import scala.xml.XML
 
 import com.typesafe.scalalogging.StrictLogging
 
+/**
+ * Generate an index of all the IRI stems currently known and other information that might be useful in determining
+ * IRI stems for them.
+ *
+ * SYNOPSIS
+ *  scala-cli scripts/GenerateIndex.scala input
+ */
+
 object GenerateIndex extends StrictLogging {
   def main(args: Array[String]) = {
-    if (args.length != 1) {
-      logger.error("Need one argument: the root directory to index from.")
+    if (args.isEmpty) {
+      logger.error("Need at least one argument: the root directory to index from.")
       sys.exit(-1)
     }
 
-    val files = recursiveListFiles(new File(args(0)))
+    val files = args.flatMap(arg => recursiveListFiles(new File(arg)))
     val xmlFiles = files.filter(_.getName.toLowerCase.endsWith(".xml"))
 
-    // logger.info(s"Identified ${xmlFiles.length} XML files to index.")
+    logger.debug(s"Identified ${xmlFiles.length} XML files to index.")
 
     println(s"file\trootLabel\tid\turl\tdescription\tpublisher\tstatus")
-    xmlFiles.flatMap(indexFile).foreach(res => {
+    xmlFiles.flatMap(indexFile).sortBy(_.id).foreach(res => {
       println(s"${res.file}\t${res.rootLabel}\t${res.id}\t${res.url}\t${res.descriptionField}\t${res.publisher}\t${res.status}")
     })
   }
@@ -72,8 +80,10 @@ object GenerateIndex extends StrictLogging {
 
   /** Recurse from files in a given directory.
    * Code from https://stackoverflow.com/a/2638109/27310
-   */ 
+   */
   def recursiveListFiles(f: File): Seq[File] = {
+    logger.debug(f"recursiveListFiles(${f})")
+
     val these = f.listFiles
     these ++ these.filter(_.isDirectory).flatMap(recursiveListFiles)
   }
